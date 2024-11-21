@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tanyas Adventskalender</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&display=swap"
+    rel="stylesheet"
+  />
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -20,7 +24,8 @@
       background-color: #a23838;
       color: #fff;
       padding: 20px 10px;
-      font-family: 'Georgia', serif;
+      font-family: 'Mountains of Christmas', cursive; /* Christmas Schrift */
+      border-top: 5px solid #d4af37; /* Goldener Streifen oben */
       border-bottom: 5px solid #d4af37;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
@@ -42,20 +47,35 @@
       margin-top: 15px;
     }
 
+    /* Buttons mit Holztextur und Glow */
     button {
-      background-color: #ffcb69;
-      border: none;
-      color: #333;
-      padding: 10px 15px;
-      font-size: 1em;
-      border-radius: 5px;
+      background: url('https://www.transparenttextures.com/patterns/wood-pattern.png'); /* Holztextur */
+      background-color: #5e3a1d; /* Holzfarbe */
+      border: 2px solid #3c2414; /* Dunkelbraune Umrandung */
+      color: #ffd700; /* Goldene Schriftfarbe */
+      padding: 15px 25px;
+      font-size: 1.2em;
+      border-radius: 15px;
+      font-family: 'Mountains of Christmas', cursive;
       cursor: pointer;
-      margin-top: 15px;
-      box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
     }
 
+    /* Glow-Effekt für Buttons */
     button:hover {
-      background-color: #f4a261;
+      background-color: #8b5a2b;
+      box-shadow: 0 0 20px rgba(255, 223, 0, 0.8); /* Gold-Glow */
+      transform: scale(1.1); /* Vergrößert den Button leicht */
+    }
+
+    #answer {
+      width: 90%;
+      padding: 20px;
+      font-size: 1.2em;
+      border-radius: 8px;
+      border: 2px solid #ffd700;
+      font-family: "Arial", sans-serif;
     }
 
     .input-section {
@@ -165,6 +185,17 @@
       }
     }
 
+    /* Weihnachtsbaum */
+    .tree {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      top: 100%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: auto;
+    }
+
   </style>
 </head>
 <body>
@@ -190,10 +221,10 @@
   <div class="stars">
     <div class="star" style="top: 10%; left: 5%; animation-duration: 3s; animation-delay: 0s;"></div>
     <div class="star" style="top: 20%; left: 25%; animation-duration: 3s; animation-delay: 1s;"></div>
-    <div class="star" style="top: 30%; left: 60%; animation-duration: 3s; animation-delay: 2s;"></div>
-    <div class="star" style="top: 40%; left: 50%; animation-duration: 3s; animation-delay: 0.5s;"></div>
-    <div class="star" style="top: 50%; left: 70%; animation-duration: 3s; animation-delay: 1.5s;"></div>
-    <div class="star" style="top: 60%; left: 10%; animation-duration: 3s; animation-delay: 2.5s;"></div>
+    <div class="star" style="top: 20%; left: 60%; animation-duration: 3s; animation-delay: 2s;"></div>
+    <div class="star" style="top: 25%; left: 50%; animation-duration: 3s; animation-delay: 0.5s;"></div>
+    <div class="star" style="top: 15%; left: 70%; animation-duration: 3s; animation-delay: 1.5s;"></div>
+    <div class="star" style="top: 40%; left: 10%; animation-duration: 3s; animation-delay: 2.5s;"></div>
     <div class="star" style="top: 70%; left: 80%; animation-duration: 3s; animation-delay: 3s;"></div>
   </div>
 
@@ -206,7 +237,7 @@
 
   <div class="container">
     <div class="no-calendar" id="no-calendar-message">
-      <p>Alles zu seiner Zeit mein Schatz. Noch etwas Geduld🥰🎄</p>
+      <p>Noch ist es nicht soweit.🤫 Alles zu seiner Zeit mein Schatz.🕖 Noch etwas Geduld🥰🎄</p>
     </div>
 
     <div id="calendar-content" style="display:none;">
@@ -214,13 +245,19 @@
       <button id="show-riddle">Zum heutigen Rätsel</button>
       <div class="input-section" id="input-section">
         <p id="riddle-text"></p>
-        <input type="text" id="answer" placeholder="Deine Antwort hier" />
+        <input type="text" id="answer" placeholder="Na weißt du es?" />
         <button id="submit-answer">Antwort prüfen</button>
         <p class="result" id="result"></p>
         <p class="stickers" id="stickers"></p>
       </div>
     </div>
   </div>
+
+  <img
+    src="https://www.seekpng.com/png/full/944-9441638_free-cartoon-christmas-tree-images-download-clip-artes.png"
+    alt="Weihnachtsbaum"
+    class="tree"
+  />
 
   <script>
     // Fragen und Antworten
@@ -234,7 +271,7 @@
       7: { question: "Ich komme vom Planeten Zebulon. Wer bin ich?", answer: ["Captain Hero"], stickers: "Sticker: 7 pinke Sterne" },
       8: { question: "In dieser Stadt hatten wir ein 4-Gänge-Menü", answer: ["Nürnberg"], stickers: "Sticker: 1 Rentier + 6 silberne Sterne" },
       9: { question: "Wir küssten uns zum ersten Mal auf einer?", answer: ["Bank"], stickers: "Sticker: Geschmückter Tannenbaum + 2 goldene Blätter" },
-      10: { question: "Welche Farbe hatte der Pullover, der nach dem Picknick kaputt ging?", answer: ["Babyblau"], stickers: "Sticker: Ein Tannenbaum" },
+      10: { question: "Welche Farbe hatte der Pullover, der nach dem Picknick kaputt ging?", answer: ["Babyblau", "Baby blau", "Baby-blau", "baby blau"], stickers: "Sticker: Ein Tannenbaum" },
       11: { question: "Welche Farbe hat mein Portmonee?", answer: ["Beige"], stickers: "Sticker: Ein Tannenbaum + Vögelchen" },
       12: { question: "Auf der Flasche deines ersten Liebensbriefs an mich stand?:", answer: ["T+J=<3"], stickers: "Sticker: 3 Schneeflocken" },
       13: { question: "Name des Schiffs auf dem wir fuhren lautete?:", answer: ["Kristallprinzessin"], stickers: "Sticker: Viele bunte Sterne" },
@@ -282,7 +319,7 @@
       const riddle = riddles[day];
 
       if (riddle && riddle.answer.some((ans) => ans.toLowerCase() === userAnswer)) {
-        document.getElementById("result").innerText = "Richtig!Bien Hecho!❤️ Du darfst die Schachtel mit folgenden Sticker(n) öffnen:";
+        document.getElementById("result").innerText = "Richtig! Bien Hecho! ❤️ Du darfst die Schachtel mit folgenden Sticker(n) öffnen:";
         document.getElementById("stickers").innerText = riddle.stickers;
       } else {
         document.getElementById("result").innerText = "Oh no 🥺 Leider falsch. Versuchs einfach nochmal! Frag mich gern, wenn du Hilfe brauchst❤️";
